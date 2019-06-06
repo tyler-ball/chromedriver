@@ -7,9 +7,9 @@ var debug = require('debug')('electron-chromedriver');
 var versionToDownload = require('./package').version
 
 download(versionToDownload, function (err, zipPath) {
-  debug('TYLER')
+  console.log('TYLER')
   if (err) {
-    debug('TYLER', err)
+    console.log('TYLER' + err)
     var versionSegments = versionToDownload.split('.')
     var baseVersion = versionSegments[0] + '.' + versionSegments[1] + '.0'
     download(baseVersion, processDownload)
@@ -31,7 +31,7 @@ function download (version, callback) {
 
 function processDownload (err, zipPath) {
   if (err != null) {
-    debug('TYLER', err)
+    console.log('TYLER', err)
     throw err
   }
   extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, function (error) {
