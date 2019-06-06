@@ -2,11 +2,14 @@ var fs = require('fs')
 var path = require('path')
 var electronDownload = require('electron-download')
 var extractZip = require('extract-zip')
+var debug = require('debug')('electron-chromedriver');
 
 var versionToDownload = require('./package').version
 
 download(versionToDownload, function (err, zipPath) {
+  debug('TYLER')
   if (err) {
+    debug('TYLER', err)
     var versionSegments = versionToDownload.split('.')
     var baseVersion = versionSegments[0] + '.' + versionSegments[1] + '.0'
     download(baseVersion, processDownload)
@@ -27,7 +30,10 @@ function download (version, callback) {
 }
 
 function processDownload (err, zipPath) {
-  if (err != null) throw err
+  if (err != null) {
+    debug('TYLER', err)
+    throw err
+  }
   extractZip(zipPath, {dir: path.join(__dirname, 'bin')}, function (error) {
     if (error != null) throw error
     console.log('successfully downloaded and extracted!')
